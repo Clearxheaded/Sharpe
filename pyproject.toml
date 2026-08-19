@@ -1,0 +1,22 @@
+[project]
+name = "sharpe"
+version = "0.1.0"
+description = "Investment portfolio risk & optimization analyzer"
+authors = [
+    { name = "Rus", email = "7777x777x7777@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "alembic>=1.19.1",
+    "fastapi==0.115.0",
+    "numpy==2.1.1",
+    "pandas==2.2.3",
+    "psycopg2-binary>=2.9.12",
+    "pydantic==2.9.2",
+    "sqlalchemy>=2.0.52",
+    "uvicorn[standard]==0.30.6",
+    "yfinance==1.5.1",
+]
+
+[tool.uv]
+package = false
