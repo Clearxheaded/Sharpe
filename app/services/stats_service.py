@@ -43,6 +43,11 @@ def compute_annualized_volatility(log_returns: pd.Series) -> float:
     return float(daily_vol * np.sqrt(252))
 
 
+def get_risk_free_rate() -> float:
+    prices = fetch_prices("^IRX")
+    return float(prices["Close"].iloc[-1]) / 100
+
+
 def get_ticker_stats(ticker: str) -> dict:
     prices = fetch_prices(ticker)
     log_returns = compute_log_returns(prices)

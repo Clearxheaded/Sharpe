@@ -8,11 +8,14 @@ authors = [
 requires-python = ">=3.12"
 dependencies = [
     "alembic>=1.19.1",
+    "bcrypt>=5.0.0",
+    "email-validator>=2.3.0",
     "fastapi==0.115.0",
     "numpy==2.1.1",
     "pandas==2.2.3",
     "psycopg2-binary>=2.9.12",
     "pydantic==2.9.2",
+    "pyjwt>=2.13.0",
     "sqlalchemy>=2.0.52",
     "uvicorn[standard]==0.30.6",
     "yfinance==1.5.1",
