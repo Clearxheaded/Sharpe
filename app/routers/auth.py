@@ -3,6 +3,8 @@ from pydantic import BaseModel, EmailStr, Field
 from sqlalchemy.orm import Session
 
 from app.db import get_db
+from app.dependencies import get_current_user
+from app.models import User
 from app.services.auth_service import (
     EmailAlreadyRegisteredError,
     InvalidCredentialsError,
@@ -86,3 +88,8 @@ def refresh(request: RefreshRequest, db: Session = Depends(get_db)):
 @router.post("/auth/logout", status_code=204)
 def logout(request: LogoutRequest, db: Session = Depends(get_db)):
     revoke_refresh_token(db, request.refresh_token)
+
+
+@router.get("/auth/me", response_model=UserResponse)
+def read_current_user(user: User = Depends(get_current_user)):
+    return user

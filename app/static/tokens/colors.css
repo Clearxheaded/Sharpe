@@ -1,0 +1,91 @@
+:root{
+  /* ---- Paper: warm neutral surfaces, lightest to heaviest ---- */
+  --paper-0:#FBFAF7;
+  --paper-1:#F4F2ED;
+  --paper-2:#EAE7E0;
+  --paper-3:#DFDBD2;
+  --paper-4:#D0CBC0;
+
+  /* ---- Ink: graphite text, darkest to lightest ---- */
+  --ink-0:#121415;
+  --ink-1:#31363A;
+  --ink-2:#5C6266;
+  --ink-3:#878D92;
+  --ink-4:#AEB3B7;
+
+  /* ---- Sodium: the brand accent. Interactive, focus, emphasis. ---- */
+  --sodium-100:#FBE7D8;
+  --sodium-200:#F6C7A5;
+  --sodium-400:#F07E3C;
+  --sodium-500:#E4581F;
+  --sodium-600:#C24310;
+  --sodium-700:#93300A;
+
+  /* ---- Teal: the cool counterweight. Diversification, gains, secondary data. ---- */
+  --teal-100:#D9EAE6;
+  --teal-200:#A9CFC8;
+  --teal-500:#1F8479;
+  --teal-600:#14655F;
+  --teal-700:#0C4B47;
+
+  /* ---- Crimson: loss, destructive, hard errors ---- */
+  --crimson-100:#F7DED9;
+  --crimson-500:#B93222;
+  --crimson-600:#8E2417;
+
+  /* ---- Diverging scale for correlation / covariance matrices ----
+     Cool = assets offset each other (risk reduced).
+     Warm = assets move together (risk concentrated).
+     Bins map -1.0 → +1.0 in steps of 0.25. */
+  --div-n4:#0C4B47;
+  --div-n3:#1F8479;
+  --div-n2:#71B4AA;
+  --div-n1:#C1DCD6;
+  --div-0:#EFEDE7;
+  --div-p1:#F8DAC1;
+  --div-p2:#EFA271;
+  --div-p3:#DD6A2C;
+  --div-p4:#A83612;
+  /* text colour to sit on the two darkest ends of the scale */
+  --div-on-dark:#F7F5F1;
+  --div-on-light:#26292B;
+
+  /* ---- Semantic aliases: use these in components ---- */
+  --bg-page:var(--paper-1);
+  --bg-canvas:var(--paper-0);
+  --surface-panel:var(--paper-0);
+  --surface-sunken:var(--paper-2);
+  --surface-header:var(--paper-2);
+  --surface-row-alt:#F7F5F1;
+  --surface-inverse:var(--ink-0);
+
+  --text-primary:var(--ink-0);
+  --text-body:var(--ink-1);
+  --text-secondary:var(--ink-2);
+  --text-label:var(--ink-3);
+  --text-inverse:var(--paper-0);
+  --text-accent:var(--sodium-600);
+  --text-link:var(--sodium-600);
+  --text-link-hover:var(--sodium-700);
+
+  --rule:#DAD5CA;
+  --rule-soft:#E7E3DA;
+  --rule-strong:#BDB7AA;
+  --rule-inverse:#2C3033;
+
+  --accent:var(--sodium-500);
+  --accent-hover:var(--sodium-600);
+  --accent-press:var(--sodium-700);
+  --accent-wash:var(--sodium-100);
+  --focus-ring:var(--sodium-500);
+
+  --value-positive:var(--teal-600);
+  --value-negative:var(--crimson-500);
+  --value-neutral:var(--ink-2);
+  --state-warning:var(--sodium-600);
+  --state-warning-wash:var(--sodium-100);
+  --state-danger:var(--crimson-500);
+  --state-danger-wash:var(--crimson-100);
+  --state-ok:var(--teal-600);
+  --state-ok-wash:var(--teal-100);
+}

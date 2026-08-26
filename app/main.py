@@ -3,7 +3,10 @@ app entrypoint. this file's only job is to construct the FastAPI app and
 register routers on it.
 """
 
+from pathlib import Path
+
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 
 from app.routers import auth, portfolios, stats
 
@@ -17,3 +20,10 @@ app.include_router(auth.router, prefix="/api")
 @app.get("/health")
 def health_check():
     return {"status": "ok"}
+
+
+app.mount(
+    "/",
+    StaticFiles(directory=Path(__file__).parent / "static", html=True),
+    name="static",
+)

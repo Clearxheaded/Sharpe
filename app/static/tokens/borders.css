@@ -1,0 +1,24 @@
+:root{
+  /* Corners are near-square. 2px is the house radius; nothing rounder than 3px
+     except pills on status chips. */
+  --radius-0:0px;
+  --radius-1:2px;
+  --radius-2:3px;
+  --radius-pill:999px;
+
+  --bw-hair:1px;
+  --bw-thick:2px;
+
+  --border-hair:1px solid var(--rule);
+  --border-soft:1px solid var(--rule-soft);
+  --border-strong:1px solid var(--rule-strong);
+  --border-accent:1px solid var(--accent);
+
+  /* Elevation is expressed with rules, not shadows. Only detached surfaces
+     (menus, dialogs) are allowed a shadow. */
+  --shadow-none:none;
+  --shadow-pop:0 10px 28px -12px rgba(18,20,21,.28),0 1px 0 0 var(--rule);
+  --shadow-dialog:0 24px 64px -20px rgba(18,20,21,.35);
+  --ring-focus:0 0 0 2px var(--paper-0),0 0 0 3px var(--focus-ring);
+  --ring-inset:inset 0 0 0 1px var(--rule);
+}

@@ -1,0 +1,10 @@
+/* Sharpe has no licensed typefaces of its own. Both families are Google Fonts,
+   loaded from the Google CDN. Archivo carries UI + display; JetBrains Mono
+   carries every number, ticker and label. See readme.md → VISUAL FOUNDATIONS. */
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap");
+:root{
+  --font-ui:"Archivo","Helvetica Neue",Helvetica,sans-serif;
+  --font-display:"Archivo","Helvetica Neue",Helvetica,sans-serif;
+  --font-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --font-numeric:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}

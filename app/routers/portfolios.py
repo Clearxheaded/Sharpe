@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field, model_validator
 from sqlalchemy.orm import Session
@@ -8,6 +10,7 @@ from app.models import User
 from app.services.portfolio_service import (
     InsufficientOverlapError,
     compute_portfolio_stats,
+    compute_portfolios_summary,
     create_portfolio,
     delete_portfolio,
     get_portfolio,
@@ -59,6 +62,7 @@ class HoldingResponse(BaseModel):
 class PortfolioResponse(BaseModel):
     id: int
     name: str
+    created_at: datetime
     holdings: list[HoldingResponse]
 
     model_config = {"from_attributes": True}
@@ -69,11 +73,29 @@ class PortfolioStatsResponse(BaseModel):
     weights: list[float]
     covariance_matrix: dict[str, dict[str, float]]
     correlation_matrix: dict[str, dict[str, float]]
+    holding_return: dict[str, float]
+    holding_volatility: dict[str, float]
+    observations: int
     portfolio_variance: float
     portfolio_volatility: float
     portfolio_return: float
     risk_free_rate: float
     sharpe_ratio: float
+
+
+class PortfolioSummaryItem(BaseModel):
+    id: int
+    name: str
+    created_at: datetime
+    tickers: list[str]
+    weights: list[float]
+    sharpe_ratio: float | None
+    portfolio_volatility: float | None
+
+
+class PortfolioSummaryResponse(BaseModel):
+    risk_free_rate: float
+    portfolios: list[PortfolioSummaryItem]
 
 
 def _get_owned_portfolio(db: Session, user: User, portfolio_id: int):
@@ -101,6 +123,13 @@ def list_portfolios_endpoint(
     db: Session = Depends(get_db), user: User = Depends(get_current_user)
 ):
     return list_portfolios(db, user.id)
+
+
+@router.get("/portfolios/summary", response_model=PortfolioSummaryResponse)
+def read_portfolios_summary(
+    db: Session = Depends(get_db), user: User = Depends(get_current_user)
+):
+    return compute_portfolios_summary(db, user.id)
 
 
 @router.get("/portfolios/{portfolio_id}", response_model=PortfolioResponse)

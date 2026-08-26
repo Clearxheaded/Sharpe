@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 
 from app.models import Holding, Portfolio
 from app.services.stats_service import (
+    TickerNotFoundError,
     compute_log_returns,
     fetch_prices,
     get_risk_free_rate,
@@ -85,6 +86,7 @@ def compute_portfolio_stats(portfolio: Portfolio) -> dict:
     annualized_cov = returns.cov() * TRADING_DAYS
     annualized_mean_returns = returns.mean() * TRADING_DAYS
     correlation = returns.corr()
+    annualized_holding_vol = np.sqrt(np.diag(annualized_cov.values))
 
     portfolio_variance = float(weights @ annualized_cov.values @ weights)
     portfolio_volatility = float(np.sqrt(portfolio_variance))
@@ -98,9 +100,44 @@ def compute_portfolio_stats(portfolio: Portfolio) -> dict:
         "weights": weights.tolist(),
         "covariance_matrix": annualized_cov.round(6).to_dict(),
         "correlation_matrix": correlation.round(4).to_dict(),
+        "holding_return": annualized_mean_returns.round(6).to_dict(),
+        "holding_volatility": {
+            t: float(v) for t, v in zip(tickers, annualized_holding_vol.round(6))
+        },
+        "observations": len(returns),
         "portfolio_variance": portfolio_variance,
         "portfolio_volatility": portfolio_volatility,
         "portfolio_return": portfolio_return,
         "risk_free_rate": risk_free_rate,
         "sharpe_ratio": sharpe_ratio,
+    }
+
+
+def compute_portfolios_summary(db: Session, user_id: int) -> dict:
+    portfolios = list_portfolios(db, user_id)
+    summaries = []
+    for portfolio in portfolios:
+        sharpe_ratio = None
+        portfolio_volatility = None
+        try:
+            stats = compute_portfolio_stats(portfolio)
+            sharpe_ratio = stats["sharpe_ratio"]
+            portfolio_volatility = stats["portfolio_volatility"]
+        except (TickerNotFoundError, InsufficientOverlapError):
+            pass
+        summaries.append(
+            {
+                "id": portfolio.id,
+                "name": portfolio.name,
+                "created_at": portfolio.created_at,
+                "tickers": [h.ticker for h in portfolio.holdings],
+                "weights": [h.weight for h in portfolio.holdings],
+                "sharpe_ratio": sharpe_ratio,
+                "portfolio_volatility": portfolio_volatility,
+            }
+        )
+
+    return {
+        "risk_free_rate": get_risk_free_rate(),
+        "portfolios": summaries,
     }
